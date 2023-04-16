@@ -20,13 +20,14 @@ import Login from './screens/Auth/Login';
 import { TravelRealmContext} from './components/Database/MongoDB';
 import { AppProvider } from '@realm/react';
 import { Platform } from 'react-native';
+import Next from './screens/Auth/Next';
 
 const {RealmProvider} = TravelRealmContext;    
 
 const Stack  = createNativeStackNavigator()
 const Tab = createBottomTabNavigator();
 
-const Tabs = ({route, navigation}: {navigation: any, route: any}) => {
+const Tabs = ({route}: { route: any}) => {
 
   const email = 'route.params'
 
@@ -67,6 +68,7 @@ function App(): JSX.Element {
         <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerShown: false}}>
           <Stack.Screen name='Zero' component={Zero} />
           <Stack.Screen name='One' component={One} />
+          <Stack.Screen name='Next' component={Next} />
           <Stack.Screen name='Tabs' component={Tabs} />
           <Stack.Screen name='Travels' component={Travels} />
           <Stack.Screen name='Login' component={Login} />

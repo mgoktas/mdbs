@@ -8,24 +8,13 @@ import {useApp, useUser} from '@realm/react';
 import  Realm  from 'realm';
 import { Dog, DogRealmContext } from '../../components/Database/MongoDB';
 
-// let realm = new Realm({ path: 'UserDatabase.realm' })
-// const realm = useRealm()
-
-// const {useRealm, useQuery, useObject} = DogRealmContext;    
-
-
 const Signup = ({navigation}) => {
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // const realm = useRealm()
-    // const dogs = useQuery(Dog);
-    // const myDog = useObject(Dog, _id);
-
     const app = useApp();
-    const user = useUser();
     
     const createAccount = async () => {
 
@@ -33,14 +22,15 @@ const Signup = ({navigation}) => {
             Alert.alert('Security Error','Name should include your surname')
             return
         }
-        try{
+        
+        try {
             await app.emailPasswordAuth.registerUser({email, password});
             navigation.navigate('Login')
-          }catch (err) {
+          } 
+          
+          catch (err) {
             Alert.alert('Security Error',err.message)
           }
-
-            // await app.logIn(Realm.Credentials.emailPassword(email, password));
     }
      
 

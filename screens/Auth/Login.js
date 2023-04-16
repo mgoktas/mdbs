@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import { useApp, useUser } from '@realm/react';
+import { useApp } from '@realm/react';
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';

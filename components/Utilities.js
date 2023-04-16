@@ -6,39 +6,12 @@ import CountryFlag from 'react-native-country-flag';
 import { horizontalScale, verticalScale } from './Metrics';
 import { Button, Dialog, Portal, Provider, Text as Text2 } from 'react-native-paper';
 
-export const Space = ({
-    space
-}) => (
+const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = Dimensions.get('window')
+
+export const Space = ({space}) => (
     <View style={{marginVertical: verticalScale(space)}}>
     </View>
 );
-
-const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = Dimensions.get('window')
-
-// export const InputHome = forwardRef((props, ref) => {
-//     const [value, setValue] = useState('')
-
-//     useImperativeHandle(ref, () => ({
-//         value : () => {setValue('')}
-//     }))
-
-//     chilTextdRef= React.createRef();
-
-//     const setChange = (txt) => {
-//         setValue(txt);
-//         return txt
-//     }
-
-//     return (
-//         <View style={styles.textInputCnt}>
-//             <TextInput style={styles.textInput} onChangeText={setChange} value={value} placeholder={'Where do you want to go?'}>
-            
-//             </TextInput>
-//         </View>
-//     )
-// })
-
-
 
 export const InputHome = React.forwardRef((props, ref) => {
   return (
@@ -133,29 +106,29 @@ export const Header = ({title, button, onPress, zindex, opacity, color}) => {
       </View>
     )}
 
-export const HeaderButton = ({button, onPress, opacity, zindex}) => {
+export const HeaderButton = ({button, onPress, opacity, zindex, color}) => {
   return (
     <TouchableOpacity style={[styles.headerButtonCnt2, {opacity: opacity, zIndex: zindex}]} onPress={onPress}>
-          <Text style={styles.headerButton2}>{button}</Text>
+          <Text style={[styles.headerButton2, {color: color}]}>{button}</Text>
     </TouchableOpacity>
   )
 }   
 
-export const TextButton = ({onPress}) => {
+export const TextButton = ({onPress, txt, color}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.myCountryAccountCnt}>
-        <Text style={styles.myCountryAccountChng}>Change Account</Text>
+        <Text style={[styles.myCountryAccountChng, {color: color}]}>{txt}</Text>
     </TouchableOpacity>
   )
 }
 
-export const MyDialog = ({visible, hideDialog, onPressYes}) => {
+export const MyDialog = ({visible, hideDialog, onPressYes, title}) => {
 
   return (
     <Provider theme={{colors: {background: 'transparent', elevation: {level3: 'white'}}}}>
     <Portal>
         <Dialog style={styles.dialog} visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Do you want to log out?</Dialog.Title>
+          <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Actions style={{justifyContent: 'space-between'}}>
               <TouchableOpacity onPress={hideDialog} style={{marginStart: 40, padding: 5, paddingHorizontal: 20, backgroundColor: 'white', borderRadius: 5, borderWidth: 1.2,}}><Text style={{color: 'black'}}>No</Text></TouchableOpacity>
               <TouchableOpacity onPress={onPressYes} style={{marginEnd: 40, padding: 5, paddingHorizontal: 20, backgroundColor: 'black', borderRadius: 5, borderWidth: 1.2,}}><Text style={{color: 'white'}}>Yes</Text></TouchableOpacity>
@@ -165,6 +138,57 @@ export const MyDialog = ({visible, hideDialog, onPressYes}) => {
     </Provider>
   )
 }
+
+export const InfoDialog = ({visible, hideDialog, onPressYes}) => {
+
+  return (
+    <Provider theme={{colors: {background: 'transparent', elevation: {level3: 'white'}}}} >
+      <View>
+          <Portal>
+          <Dialog style={styles.provider} visible={visible} onDismiss={hideDialog}>
+              <View style={{flexDirection: 'column', marginHorizontal: horizontalScale(20)}}>
+              <Text style={styles.dialogTitle}>You are travelling</Text>
+              <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.dialogFrontText}>from</Text> 
+                  <Text style={{fontSize: 20}}> {myCountry.name}</Text>
+              </View>
+              <View style={styles.dialogRowCnt}>
+                  <Text style={styles.dialogFrontText}>to</Text> 
+                  <Text style={{fontSize: 20}}> {goCountry}</Text>
+              </View>
+              <View style={styles.dialogRowCnt}>
+                  <Text style={styles.dialogFrontText}>If you stay there for <Text>
+                  <Text style={{fontSize: 20}}>{dayDifferenceNegative}</Text>
+                  </Text>days</Text> 
+              </View>
+              <View style={styles.dialogRowCnt}>
+                  <Text style={styles.dialogFrontText}>you are expected to live <Text>
+                  </Text>{adverb} <Text style={{fontSize: 20}}>{dayDifference} </Text>days</Text> 
+              </View>
+              </View>
+              <Dialog.Title>
+                  ENJOY YOUR HOLIDAY!
+              </Dialog.Title>
+              <Dialog.Actions>
+                <Button onPress={hideDialog} textColor={'blue'}>Thank You!</Button>
+              </Dialog.Actions>
+          </Dialog>
+          </Portal>
+      </View>
+    </Provider>
+  )
+}
+
+export const TextEmpty = ({txt}) => {
+  return (
+    <View st>
+      <Text color={'white'}>
+        {txt}
+      </Text>
+    </View>
+  )
+}
+
 
 const styles = StyleSheet.create({
     textInputCnt : {
@@ -316,42 +340,56 @@ const styles = StyleSheet.create({
       width: '33%',
       marginTop: 32,
       left: 40
-    },
-    headerButton: {
-      color: '#1640EA', 
-      fontSize: 15, 
-    },
-    headerButtonCnt2: {
-      color: '#1640EA', 
-      fontSize: 15, 
-      backgroundColor: 'transparent',
-      position: 'absolute',
-      height: 120,
-      left: 20,
-      justifyContent: 'center'
-    },
-    headerButton2: {
-      color: 'red', 
-      fontSize: 15, 
-    },
-    myCountryAccountCnt: {
-      marginHorizontal: horizontalScale(50),
-      flexDirection: 'row',
-      marginBottom: verticalScale(40),
-      justifyContent: 'space-between'
       },
-    myCountryAccountChng : {
-      marginVertical: verticalScale(10),
-      color: '#B2A496'
-  },
-  dialog: {
-    position: 'absolute',
-    opacity: 2,
-    zIndex: 2,
-    width: SCREEN_WIDTH/ 1.2,
-    alignSelf: 'center',
-    backgroundColor: '#D8D3D0',
-    bottom: SCREEN_HEIGHT / 7
-},
+      headerButton: {
+        color: '#1640EA', 
+        fontSize: 15, 
+      },
+      headerButtonCnt2: {
+        color: '#1640EA', 
+        fontSize: 15, 
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        height: 120,
+        left: 20,
+        justifyContent: 'center'
+      },
+      headerButton2: {
+        color: 'red', 
+        fontSize: 15, 
+      },
+      myCountryAccountCnt: {
+        marginHorizontal: horizontalScale(50),
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+        },
+      myCountryAccountChng : {
+        marginVertical: verticalScale(10),
+        color: '#B2A496'
+      },
+      dialog: {
+      position: 'absolute',
+      opacity: 2,
+      zIndex: 2,
+      width: SCREEN_WIDTH/ 1.2,
+      alignSelf: 'center',
+      backgroundColor: '#D8D3D0',
+      bottom: SCREEN_HEIGHT / 7
+      },
+      dialogTitle : {
+        fontSize: 18, 
+        marginVertical: 
+        verticalScale(10), 
+        alignSelf: 'center', 
+        bottom: verticalScale(10)
+      },
+      dialogRowCnt: {
+        flexDirection: 'row', 
+        marginBottom: verticalScale(20)
+      },
+      dialogFrontText : {
+        fontSize: 12, 
+        alignSelf: 'center'
+      }
       
 })

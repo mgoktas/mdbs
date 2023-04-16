@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Header, HeaderButton, HistoryCnt, Seperator, Seperator2, Space } from '../../components/Utilities';
+import { Header, HeaderButton, HistoryCnt, Seperator, Seperator2, Space, TextEmpty } from '../../components/Utilities';
 import { Travel, TravelRealmContext } from '../../components/Database/MongoDB';
 import { useFocusEffect } from '@react-navigation/native';
 import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
@@ -190,7 +190,12 @@ const Travels = ({route, navigation}) => {
     return (
     <SafeAreaView style={styles.page}>
         <Header title={'Travels'} color={'black'} button={'Edit'}  onPress={isDelete || allTravels.length == 0 ? () => {} : deleteActive} zindex={isDelete || allTravels.length == 0 ? 0 : 2} opacity={isDelete || allTravels.length == 0 ? 0 : 2}/>
-        <HeaderButton onPress={() => {if(isDelete){deleteAll(); setAllTravels([]); setCount(5)}}} button={'Delete All'}  zindex={!isDelete2 ? 0 : 2} opacity={!isDelete2 ? 0 : 2}/>
+        <View>
+      <Text style={{color: 'white', position: 'absolute', top: 0, opacity:allTravels.length == 0 && !visible ? 1 : 0}}>
+        No Items Found.
+      </Text>
+    </View>
+        <HeaderButton color={'red'} onPress={() => {if(isDelete){deleteAll(); setAllTravels([]); setCount(5)}}} button={'Delete All'}  zindex={!isDelete2 ? 0 : 2} opacity={!isDelete2 ? 0 : 2}/>
                 <Space space={20}/>
                 <FlatList
                  style={{zIndex: visible ? 0 : 0, opacity: visible ? 0 : 1}} 
