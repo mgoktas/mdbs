@@ -63,7 +63,7 @@ function App(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <AppProvider id={'mdbs-kxcwn'}>
+      <AppProvider id={<YOUR-APP-NAME>}>
       <RealmProvider>
         <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerShown: false}}>
           <Stack.Screen name='Zero' component={Zero} />
